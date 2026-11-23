@@ -9,5 +9,10 @@ defmodule LibraryLendingApiWeb.Router do
     pipe_through :api
 
     get "/health", HealthController, :index
+
+    post "/books", BookController, :create
+    get "/books", BookController, :index
+    get "/books/:id", BookController, :show
+    delete "/books/:id", BookController, :delete
   end
 end
