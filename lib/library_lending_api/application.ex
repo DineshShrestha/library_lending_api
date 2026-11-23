@@ -10,7 +10,8 @@ defmodule LibraryLendingApi.Application do
     children = [
       LibraryLendingApiWeb.Telemetry,
       LibraryLendingApi.Repo,
-      {DNSCluster, query: Application.get_env(:library_lending_api, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:library_lending_api, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: LibraryLendingApi.PubSub},
       # Start a worker by calling: LibraryLendingApi.Worker.start_link(arg)
       # {LibraryLendingApi.Worker, arg},
