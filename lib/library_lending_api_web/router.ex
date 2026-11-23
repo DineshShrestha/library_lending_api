@@ -7,5 +7,7 @@ defmodule LibraryLendingApiWeb.Router do
 
   scope "/api", LibraryLendingApiWeb do
     pipe_through :api
+
+    get "/health", HealthController, :index
   end
 end
