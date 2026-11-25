@@ -1,6 +1,7 @@
 defmodule LibraryLendingApi.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias LibraryLendingApi.Accounts.User
 
   schema "users" do
     field :name, :string
@@ -31,5 +32,18 @@ defmodule LibraryLendingApi.Accounts.User do
     else
       changeset
     end
+  end
+
+  def valid_password?(
+        %User{hashed_password: hashed_password},
+        password
+      )
+      when is_binary(hashed_password) and is_binary(password) and byte_size(password) > 0 do
+    Bcrypt.verify_pass(password, hashed_password)
+  end
+
+  def valid_password?(_user, _password) do
+    Bcrypt.no_user_verify()
+    false
   end
 end
