@@ -14,5 +14,8 @@ defmodule LibraryLendingApiWeb.Router do
     get "/books", BookController, :index
     get "/books/:id", BookController, :show
     delete "/books/:id", BookController, :delete
+
+    post "/auth/register", AuthController, :create
+    post "/auth/login", AuthController, :login
   end
 end

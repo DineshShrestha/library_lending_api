@@ -1,5 +1,4 @@
 defmodule LibraryLendingApi.Accounts do
-  import Ecto.Query
   alias LibraryLendingApi.Accounts.User
   alias LibraryLendingApi.Accounts.UserToken
   alias LibraryLendingApi.Repo
@@ -35,13 +34,14 @@ defmodule LibraryLendingApi.Accounts do
   end
 
   def get_user_by_session_token(token) do
-    from(user_token in UserToken,
-      join: user in assoc(user_token, :user),
-      where:
-        user_token.token == ^token and
-          user_token.context == "session",
-      select: user
-    )
-    |> Repo.one()
+    user_token = Repo.get_by(UserToken, token: token, context: "session")
+
+    case user_token do
+      nil ->
+        nil
+
+      user_token ->
+        Repo.get(User, user_token.user_id)
+    end
   end
 end
